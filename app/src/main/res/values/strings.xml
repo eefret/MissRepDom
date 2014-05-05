@@ -17,5 +17,19 @@
     <string name="title_activity_model_selection_vote">"Seleccione "</string>
     <string name="hello_world">Hello world!</string>
     <string name="btn_select_model">Elegir</string>
+    
+    <array name="profile_pics_models">
+        <item>@drawable/profile_amelia_vega</item>
+        <item>@drawable/profile_larimar_fiallo</item>
+        <item>@drawable/profile_renata_sone</item>
+        <item>@drawable/profile_mia_taveras</item>
+        <item>@drawable/profile_massiel_taveras</item>
+        <item>@drawable/profile_marianne_cruz</item>
+        <item>@drawable/profile_ada_de_la_cruz</item>
+        <item>@drawable/profile_eva_arias</item>
+        <item>@drawable/profile_dalia_fernandez</item>
+        <item>@drawable/profile_dulcita_lieggi</item>
+        <item>@drawable/profile_yaritza_reyes</item>
+    </array>
 
 </resources>

@@ -42,11 +42,15 @@ public class VoteFragment extends Fragment {
                 null,
                 null,
                 null);
+
         cursor.moveToFirst();
+
         this.userHasVoted = (cursor.getInt(0) != 0);
         if (this.userHasVoted){
             this.modelVoted = cursor.getInt(1);
         }
+
+        cursor.close();
 
         View view = inflater.inflate(R.layout.fragment_vote,null);
         mBtnVote = (Button) view.findViewById(R.id.btn_vote);
@@ -61,7 +65,10 @@ public class VoteFragment extends Fragment {
                     null
             );
             mTvVote.setText(getString(R.string.has_voted_text)+" "+ cursorBoolean.getString(0));
+            cursorBoolean.close();
         }
+
+
 
         mBtnVote.setOnClickListener(new View.OnClickListener() {
             @Override

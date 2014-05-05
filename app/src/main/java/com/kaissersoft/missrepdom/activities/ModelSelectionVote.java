@@ -2,6 +2,8 @@ package com.kaissersoft.missrepdom.activities;
 
 import java.util.Locale;
 
+import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,16 +12,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.kaissersoft.missrepdom.R;
+import com.kaissersoft.missrepdom.persistence.Contracts.ModelsContract;
 
 public class ModelSelectionVote extends ActionBarActivity {
+    private static final String TAG = "ModelSelectionVote";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -41,11 +48,16 @@ public class ModelSelectionVote extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model_selection_vote);
 
+        Cursor cursor = getContentResolver().query(ModelsContract.CONTENT_URI,
+                null,
+                "",
+                null,
+                "");
 
-
+        Log.d(TAG, cursor.getCount()+"");
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),cursor);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -81,35 +93,32 @@ public class ModelSelectionVote extends ActionBarActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private Cursor mCursor;
+
+        public SectionsPagerAdapter(FragmentManager fm, Cursor cursor) {
             super(fm);
+            mCursor = cursor;
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Log.d(TAG,"getItem pos: "+position);
+            mCursor.moveToPosition(position);
+            return new PlaceholderFragment(mCursor.getInt(mCursor.getColumnIndex(ModelsContract.MODEL_NUMBER)));
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return mCursor.getCount();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
+            mCursor.moveToPosition(position);
+            return mCursor.getString(mCursor.getColumnIndex(ModelsContract.MODEL_NAME));
         }
     }
 
@@ -117,6 +126,9 @@ public class ModelSelectionVote extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+
+        int mModelId;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -135,7 +147,9 @@ public class ModelSelectionVote extends ActionBarActivity {
             return fragment;
         }
 
-        public PlaceholderFragment(int imageId,String modelName,int modelId) {
+        public PlaceholderFragment(int modelId) {
+            mModelId = modelId;
+            Log.d(TAG,"Fragment Created: "+ modelId);
         }
 
         public PlaceholderFragment(){
@@ -146,6 +160,13 @@ public class ModelSelectionVote extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_model_selection_vote, container, false);
+            Button btn = (Button) rootView.findViewById(R.id.btn_model_vote_selection);
+            ImageView iv = (ImageView) rootView.findViewById(R.id.iv_model_profile_vote);
+
+            TypedArray ta = getActivity().getResources().obtainTypedArray(R.array.profile_pics_models);
+
+            iv.setImageDrawable(ta.getDrawable(mModelId));
+            btn.setTag(String.valueOf(mModelId));
 
             return rootView;
         }

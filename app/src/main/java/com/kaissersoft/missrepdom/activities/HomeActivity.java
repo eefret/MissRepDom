@@ -1,22 +1,21 @@
-package com.kaissersoft.missrepdom;
+package com.kaissersoft.missrepdom.activities;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+
+import com.kaissersoft.missrepdom.activities.fragments.NavigationDrawerFragment;
+import com.kaissersoft.missrepdom.R;
+import com.kaissersoft.missrepdom.activities.fragments.VoteFragment;
 
 
 public class HomeActivity extends ActionBarActivity
@@ -54,6 +53,12 @@ public class HomeActivity extends ActionBarActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
+
+        switch (position){
+            case 0:
+                fragmentManager.beginTransaction().replace(R.id.container, new VoteFragment()).commit();
+
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -66,6 +71,9 @@ public class HomeActivity extends ActionBarActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
+                break;
+            case 4:
+                mTitle = getString(R.string.title_section4);
                 break;
         }
     }

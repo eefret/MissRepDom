@@ -2,13 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kaissersoft.missrepdom" >
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!--Activities-->
+
         <activity
-            android:name="com.kaissersoft.missrepdom.HomeActivity"
+            android:name="com.kaissersoft.missrepdom.activities.HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +21,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.kaissersoft.missrepdom.activities.ModelSelectionVote"
+            android:label="@string/title_activity_model_selection_vote"
+            android:parentActivityName="com.kaissersoft.missrepdom.activities.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="HomeActivity" />
+        </activity>
+
+
+        <!--Providers-->
+        <provider
+            android:authorities="com.kaissersoft.missrepdom"
+            android:name=".persistence.DatabaseProvider" />
     </application>
 
 </manifest>

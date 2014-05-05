@@ -2,12 +2,20 @@
 <resources>
 
     <string name="app_name">MissRepDom</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Votar</string>
+    <string name="title_section2">Albumes</string>
+    <string name="title_section3">Videos</string>
+    <string name="title_section4">Sobre Nosotros</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_vote_text">Vota</string>
+    <string name="tv_vote_text">Favor vota por tu preferida</string>
+    <string name="has_voted_text">Ya ha votado por :</string>
+    <string name="title_activity_model_selection_vote">"Seleccione "</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="btn_select_model">Elegir</string>
 
 </resources>
